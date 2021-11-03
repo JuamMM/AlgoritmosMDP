@@ -1,7 +1,11 @@
 use std::env;
 use std::process;
+use std::time::Instant;
 
-pub mod conjunto;
+mod conjunto;
+mod algoritmos;
+
+use algoritmos::solucion_greedy;
 
 fn main() {
     if env::args().len() < 2 {
@@ -13,6 +17,14 @@ fn main() {
 
     let mut a = conjunto::Conjunto::new(&argumentos[1]);
 
-    a.solucion_greedy();
+    let now = Instant::now();
+
+    let a = solucion_greedy(a);
+
+    let elapsed_time = now.elapsed();
+
+    println!("La solucion es: {:?}", a.get_solucion());
+    println!("La diversidad es: {}", a.calcula_diversidad());
+    println!("El tiempo ha sido {} segundos.", elapsed_time.as_secs());
 
 }
